@@ -1,0 +1,10 @@
+library(neuralnet)
+cancer<-read.table("cancer_diagnosis.txt",sep=",")
+cancer$V2<-ifelse(cancer$V2=="M",1,0)
+nn<-neuralnet(V2~V3+V4+V5+V6+V7+V8+V9+V10+V11+V12+V13+V14+V15+V16+V17+V18+V19+V20+V21+V22+V23+V24+V25+V26+V27+V28+V29+V30+V31,data=cancer,hidden=6,err.fct="ce",linear.output=F,act.fct="logistic")
+nn1<-ifelse(nn$netresult[[1]]>0.5,1,0)
+#classification error
+classification<-mean(cancer$V2!=nn1)
+png("nn1.png")
+plot(nn)
+dev.off()
